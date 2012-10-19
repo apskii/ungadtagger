@@ -11,18 +11,18 @@ This package encapsulates abstraction-from-gadt-tag workflow by utilizing existe
     data Tag = A | B
 
     data Gadt :: Tag -> * where
-    ConA :: String -> Gadt A
-    ConB :: [Gadt A] -> Gadt B
-    ConC :: Integer -> Gadt B
+      ConA :: String   -> Gadt A
+      ConB :: [Gadt A] -> Gadt B
+      ConC :: Integer  -> Gadt B
 
     foo :: something -> [Untagged Gadt] -> String
     foo _ = quux
       where
-        quux = concat . map baz
+        quux  = concat . map baz
         baz x = match x $ \case
-          ConA s -> s
+          ConA s  -> s
           ConB xs -> quux (map untag xs)
-          ConC i -> show i
+          ConC i  -> show i
 
     test = foo "some cfg for e.g." (xs ++ ys)
       where
